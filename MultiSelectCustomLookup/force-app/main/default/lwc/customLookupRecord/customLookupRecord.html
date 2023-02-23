@@ -1,0 +1,37 @@
+<template>
+    <!-- Display the {record.Name} with the icon {iconname} to the left of it (if there is one) -->
+    <!-- When the user clicks on the record, fire an onclick event {handleSelect}-->
+    <div role="option" onclick={handleSelect}>
+        <div class="slds-grid slds-wrap 
+                        slds-dropdown_length-with-icon-7 
+                        slds-dropdown_fluid"
+                    >
+                <div class="slds-col slds-size_4-of-4 ">
+                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                        <li role="presentation" class="slds-listbox__item">
+                            <div class="slds-media slds-listbox__option 
+                                                        slds-listbox__option_entity 
+                                                        slds-listbox__option_has-meta">
+
+                                <template if:true={iconName}>
+                                    <span class="slds-media__figure slds-listbox__option-icon">
+                                        <lightning-icon icon-name={iconName} size={iconSize}></lightning-icon>
+                                    </span>
+                                </template>
+                                <span class="slds-media__body" style={recordStyle}>
+                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity">
+                                        <span style="font-weight: 600;">
+                                            {record.Name}
+                                        </span>
+                                        <template if:true={record.Description}>
+                                            <br/>{record.Description}
+                                        </template>
+                                    </span>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+    </div>
+</template>

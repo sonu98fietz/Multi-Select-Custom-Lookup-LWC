@@ -1,0 +1,95 @@
+<template>
+
+    <template if:true={componentReady}>
+
+        <!-- If a record hasn't been selected yet, show the component for searching -->
+        <template if:false={selectedRecord}>
+            <div class="spinnerContainer">
+                <c-custom-search-component
+                    label={label}
+                    help-text={helpText}
+                    placeholder={placeholder}
+                    onsearch={handleChange}
+                    required={required}
+                    >
+                </c-custom-search-component>
+
+                <!-- Overlay a spinner over the field while prefilling -->
+                <div if:true={showLoadingSpinner} class="spinnerLoadingWrapper slds-is-relative">
+                    <lightning-spinner alternative-text="Loading..." size="small" variant="brand"></lightning-spinner>
+                </div>
+            </div>
+        </template>
+
+        <!-- Display the list of records that are returned from the search -->
+        <div>
+            <template if:false={selectedRecord}>
+                <div class="spinnerContainer">
+
+                    <!-- Display the search results -->
+                    <template if:true={records}>
+
+                        <!-- Scrollable window-->
+                        <div class={scollableClass} style={scrollableStyle} tabindex="-1">
+                                
+                            <template for:each={records} for:item="record">
+                                <c-custom-lookup-record key={record.Id} record={record} onselect={handleSelect} icon-name={iconName}></c-custom-lookup-record>
+                            </template>
+
+                        </div>
+
+                    </template>
+
+                    <!-- Display if no results found -->
+                    <div if:true={noResultsFound} class={scollableClass} style={scrollableStyle} tabindex="-1">
+                        <p class="slds-p-left_small slds-p-right_small slds-p-top_xx-small slds-p-bottom_xx-small">
+                            No records were found that matched your search criteria.
+                        </p>
+                    </div>
+
+                    <!-- Overlay a spinner over the search results while searching -->
+                    <div if:true={showSpinner} class="search-results spinnerSearchWrapper slds-is-relative">
+                        <lightning-spinner alternative-text="Searching..." size="small" variant="brand"></lightning-spinner>
+                    </div>
+
+                </div>
+
+            </template>
+        </div>
+
+        <!-- Display the selected record -->
+        <template if:true={selectedRecord}>
+            
+            <label class="slds-form-element__label slds-no-flex"><template if:true={required}><abbr class="slds-required" title="required">*</abbr></template>{label}</label>
+
+            <div class="slds-combobox__form-element slds-input-has-icon 
+                            slds-input-has-icon_left-right" role="none">
+                    <span class="slds-icon_container
+                                slds-icon-standard-account 
+                                slds-combobox__input-entity-icon">
+                        <lightning-icon icon-name={iconName} size="small" ></lightning-icon>
+                    </span>
+                    <input class="slds-input slds-combobox__input
+                            slds-combobox__input-value" 
+                            id="combobox-id-5" aria-controls="listbox-id-5" 
+                            autocomplete="off" role="textbox" type="text" 
+                            placeholder="Select an Option" readonly=""
+                            value={selectedRecord.Name}
+                            style={selectedStyle}
+                            disabled
+                            />
+                    <button class="sicon_container slds-button slds-button_icon 
+                                    slds-input__icon slds-input__icon_right" 
+                            title="Remove selected option"
+                            onclick={handleRemove}>
+                        <lightning-icon icon-name="utility:clear" size="xx-small" style="margin-left: 7px;">
+
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Clear Selection</span>
+                    </button>
+                </div>
+        </template>
+
+    </template>
+    
+</template>

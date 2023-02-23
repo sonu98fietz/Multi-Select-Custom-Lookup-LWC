@@ -1,0 +1,16 @@
+<template>
+    <!-- Create an input field that will fire an onChange event that the parent component can capture, passing the user input value (searchKey) -->
+    <!-- autocomplete="off" prevents the field from being recognized as an autocomplete field-->
+    <lightning-input
+        label={label}
+        value={searchKey}
+        field-level-help={helpText}
+        type="search" 
+        placeholder={placeholder}
+        onchange={handleChange}
+        autocomplete="off"
+        required={required}
+        >
+    </lightning-input>
+
+</template>

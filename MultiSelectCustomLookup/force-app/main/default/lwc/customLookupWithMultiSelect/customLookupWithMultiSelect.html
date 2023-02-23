@@ -1,0 +1,50 @@
+<template>
+
+   <lightning-card  title="User(s)"  icon-name="utility:user">
+        <!-- Spinner -->
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <!-- User Selection -->
+    <div  style="height: 1000px;">
+        <template if:true={isUserSelectionVisible}>
+            <template if:false={hasRecordId}>
+                <div class="slds-p-left_large">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_5-of-12">
+                            <c-custom-lookup label="" placeholder="Search for an User(s)"
+                                icon-name="utility:user" object-name="User"
+                                display-fields="Name,Email" search fields = "Name"
+                                additional-fields="Name" strip-inaccessible onselect={handlePriorityOwnerChange}
+                                onclear={clear}>
+                                
+                            </c-custom-lookup>
+                        </div>
+                    </div>
+                     <div class="slds-p-top_small">
+                        <template if:true={isUsersSelected}>
+                            <template for:each={selectedUsers} for:item="selectedUser" >
+                                <span key={selectedUser.Id} >
+                                    
+                                    <lightning-pill label={selectedUser.Name} data-id={selectedUser.Id} 
+                                        data-userid={selectedUser.userId} onremove={handleRemoveOfTalent}
+                                        href={selectedUser.profileUrl}
+                                        onclick={handleClickOfPill}
+                                        data-navurl={selectedUser.profileUrl}>
+                                        <lightning-avatar src={selectedUser.MediumPhotoUrl}
+                                            fallback-icon-name="standard:user" variant="circle"
+                                            alternative-text="User avatar">
+                                        </lightning-avatar>
+                                    </lightning-pill>            
+                                </span><br key={selectedUser.Id}>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>   
+       <p slot="footer">Card Footer</p>
+   </lightning-card>
+</template>
